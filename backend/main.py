@@ -223,3 +223,6 @@ def get_wick_memories(
     return {
         "memories": memories,
     }
+
+from wick_chat import router as wick_chat_router
+app.include_router(wick_chat_router)

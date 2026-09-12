@@ -75,3 +75,20 @@ def save_streak_memory(
         memory=memory,
         importance=3,
     )
+def save_stage_memory(
+    user_id: str,
+    old_stage: str,
+    new_stage: str,
+):
+    memory = (
+        f"Wick evolved from {old_stage} to {new_stage}. "
+        f"This was an important progression milestone for the user."
+    )
+
+    return save_memory(
+        user_id=user_id,
+        memory=memory,
+        importance=5,
+    )
+
+

@@ -121,9 +121,10 @@ def update_wick(
     )
 
     if completed_today:
-        new_bond = min(100, current_bond + 2)
+        new_bond = max(0, min(100, current_bond + 2))
     else:
-        new_bond = current_bond
+        new_bond = max(0, min(100, current_bond))
+
 
     update_response = (
         supabase.table("wick")
