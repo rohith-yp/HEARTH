@@ -234,22 +234,7 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen w-full font-sans bg-sky-300 overflow-x-hidden selection:bg-amber-500 selection:text-white">
-      {/* Exact Reference Hero Image Background with Parallax */}
-      <HeroImageBackground
-        onWickClick={() => setIsDashboardOpen(true)}
-        onLaptopClick={() => setIsDashboardOpen(true)}
-      />
-
-      {/* Top Navbar */}
-      <Navbar
-        profile={profile}
-        onOpenAuth={() => setIsAuthOpen(true)}
-        onOpenDashboard={() => setIsDashboardOpen(true)}
-        activeSection={activeSection}
-        onNavigate={handleNavigate}
-      />
-
-      {/* Hero Section */}
+      {/* Exact Reference Hero Section */}
       <HeroSection
         onStartJourney={() => {
           if (isAuthenticated) {
@@ -259,6 +244,10 @@ export const LandingPage: React.FC = () => {
           }
         }}
         onWatchDemo={() => handleNavigate('features')}
+        onOpenAuth={() => setIsAuthOpen(true)}
+        onOpenDashboard={() => setIsDashboardOpen(true)}
+        onNavigate={handleNavigate}
+        isAuthenticated={isAuthenticated}
       />
 
       {/* Scrollable Story Sections */}
