@@ -22,28 +22,28 @@ export const Navbar: React.FC<NavbarProps> = ({
   const displayName = profile?.display_name || profile?.username || user?.email?.split('@')[0] || 'Seeker';
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 px-6 lg:px-12 py-5 pointer-events-auto">
+    <header className="fixed top-0 left-0 right-0 z-40 px-6 lg:px-14 py-4 pointer-events-auto backdrop-blur-[2px]">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Brand Logo & Title */}
+        {/* Brand Logo & Title (Left) */}
         <div
           onClick={() => onNavigate('home')}
-          className="flex items-center gap-3 cursor-pointer group"
+          className="flex items-center gap-3 cursor-pointer group select-none"
         >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-ember-500 flex items-center justify-center shadow-lg shadow-ember-500/30 group-hover:scale-105 transition-transform">
-            <Flame className="w-6 h-6 text-white" />
+          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-500 to-ember-500 flex items-center justify-center shadow-lg shadow-ember-500/40 group-hover:scale-105 transition-transform">
+            <Flame className="w-5 h-5 text-white fill-white/20" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-widest text-slate-900 font-cinzel">
+            <h1 className="text-xl font-bold tracking-[0.2em] text-white font-cinzel drop-shadow-md">
               HEARTH
             </h1>
-            <p className="text-[10px] text-amber-700 font-semibold tracking-wide">
+            <p className="text-[10px] text-sky-100 font-medium tracking-wide drop-shadow">
               Life RPG Companion
             </p>
           </div>
         </div>
 
-        {/* Minimal Nav Links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-800">
+        {/* Minimal Nav Links (Center/Right) */}
+        <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-white drop-shadow-md">
           {[
             { id: 'home', label: 'Home' },
             { id: 'features', label: 'Features' },
@@ -53,25 +53,25 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className={`relative transition-colors hover:text-ember-600 ${
-                activeSection === item.id ? 'text-slate-950 font-bold' : 'text-slate-700'
+              className={`relative py-1 transition-colors hover:text-amber-200 ${
+                activeSection === item.id ? 'text-white font-bold' : 'text-white/90'
               }`}
             >
               {item.label}
               {activeSection === item.id && (
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-slate-950 rounded-full" />
+                <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-white rounded-full shadow-sm" />
               )}
             </button>
           ))}
         </nav>
 
-        {/* Auth Action Pill Button */}
+        {/* Auth Action Pill Button (Right) */}
         <div className="flex items-center gap-3">
           {isAuthenticated ? (
             <div className="flex items-center gap-2">
               <button
                 onClick={onOpenDashboard}
-                className="px-4 py-2 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2"
+                className="px-5 py-2.5 rounded-full bg-white/95 hover:bg-white text-slate-900 font-bold text-xs sm:text-sm shadow-xl transition-all hover:scale-105 flex items-center gap-2"
               >
                 <Flame className="w-4 h-4 text-ember-500" />
                 <span>Dashboard ({displayName})</span>
@@ -79,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={logout}
                 title="Logout"
-                className="p-2 rounded-full bg-white/80 hover:bg-white text-rose-600 border border-slate-200 transition-all text-xs font-semibold"
+                className="p-2.5 rounded-full bg-white/90 hover:bg-white text-rose-600 shadow-md transition-all text-xs font-semibold"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -87,9 +87,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           ) : (
             <button
               onClick={onOpenAuth}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-slate-50 text-slate-900 border border-slate-200 shadow-md font-semibold text-xs sm:text-sm transition-all hover:scale-105"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/95 hover:bg-white text-slate-900 shadow-lg font-bold text-xs sm:text-sm transition-all hover:scale-105"
             >
-              <UserIcon className="w-4 h-4 text-slate-700" />
+              <UserIcon className="w-4 h-4 text-slate-800" />
               <span>Login / Register</span>
             </button>
           )}

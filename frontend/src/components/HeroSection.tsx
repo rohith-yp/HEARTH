@@ -4,8 +4,8 @@ import { AmbientMotionOverlay } from './scene/AmbientMotionOverlay';
 interface HeroSectionProps {
   onStartJourney: () => void;
   onWatchDemo: () => void;
-  onOpenAuth: () => void;
   onOpenDashboard: () => void;
+  onOpenAuth: () => void;
   onNavigate: (sectionId: string) => void;
   isAuthenticated: boolean;
 }
@@ -13,74 +13,36 @@ interface HeroSectionProps {
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onStartJourney,
   onWatchDemo,
-  onOpenAuth,
   onOpenDashboard,
+  onOpenAuth,
   onNavigate,
   isAuthenticated,
 }) => {
   return (
     <section className="relative w-full h-screen overflow-hidden pointer-events-auto">
-      {/* 1. Full-screen untouched background image matching reference */}
+      {/* 1. Full-screen background image matching reference */}
       <img
         src="/hero-bg.png"
         alt="HEARTH Living World"
         className="w-full h-full object-cover object-center pointer-events-none select-none"
       />
 
-      {/* 2. Independent Ambient Motion Layers Overlay */}
+      {/* 2. Independent Ambient Motion Overlays (Leaves, Lantern, Wick Flicker, Water Shimmer, Grass Sway) */}
       <AmbientMotionOverlay />
 
-      {/* 2. Interactive Hotspots over the image UI elements */}
+      {/* 3. Interactive Hotspots over Hero elements */}
 
-      {/* Top Left Logo & Title Hotspot */}
-      <div
-        onClick={() => onNavigate('home')}
-        className="absolute top-5 left-6 lg:left-12 w-48 h-12 cursor-pointer hover:bg-white/10 rounded-xl transition-colors"
-        title="HEARTH Home"
-      />
-
-      {/* Top Navigation Links Hotspots */}
-      <div className="hidden md:flex absolute top-5 right-64 items-center gap-6 h-12">
-        <div
-          onClick={() => onNavigate('home')}
-          className="w-14 h-full cursor-pointer hover:bg-white/10 rounded-lg transition-colors"
-          title="Home"
-        />
-        <div
-          onClick={() => onNavigate('features')}
-          className="w-16 h-full cursor-pointer hover:bg-white/10 rounded-lg transition-colors"
-          title="Features"
-        />
-        <div
-          onClick={() => onNavigate('journey')}
-          className="w-16 h-full cursor-pointer hover:bg-white/10 rounded-lg transition-colors"
-          title="Journey"
-        />
-        <div
-          onClick={() => onNavigate('about')}
-          className="w-14 h-full cursor-pointer hover:bg-white/10 rounded-lg transition-colors"
-          title="About"
-        />
-      </div>
-
-      {/* Top Right Login / Register Pill Button Hotspot */}
-      <div
-        onClick={isAuthenticated ? onOpenDashboard : onOpenAuth}
-        className="absolute top-5 right-6 lg:right-12 w-40 h-12 cursor-pointer hover:bg-white/20 rounded-full transition-all hover:scale-105"
-        title={isAuthenticated ? 'Open Dashboard' : 'Login / Register'}
-      />
-
-      {/* Hero Primary CTA: "Start Your Journey ->" Button Hotspot */}
+      {/* Primary CTA: "Start Your Journey ->" Button Hotspot */}
       <div
         onClick={onStartJourney}
-        className="absolute left-[5.5%] top-[51.5%] sm:top-[52%] w-[130px] sm:w-[150px] lg:w-[170px] h-[45px] sm:h-[50px] cursor-pointer hover:bg-white/20 rounded-full transition-all hover:scale-105"
+        className="absolute left-[5.5%] top-[51.5%] sm:top-[52%] w-[135px] sm:w-[155px] lg:w-[175px] h-[48px] sm:h-[52px] cursor-pointer hover:bg-white/20 rounded-full transition-all hover:scale-105"
         title="Start Your Journey"
       />
 
-      {/* Hero Secondary CTA: "Watch Demo ▷" Button Hotspot */}
+      {/* Secondary CTA: "Watch Demo ▷" Button Hotspot */}
       <div
         onClick={onWatchDemo}
-        className="absolute left-[20%] sm:left-[17.5%] lg:left-[16%] top-[51.5%] sm:top-[52%] w-[110px] sm:w-[130px] lg:w-[145px] h-[45px] sm:h-[50px] cursor-pointer hover:bg-white/20 rounded-full transition-all hover:scale-105"
+        className="absolute left-[20%] sm:left-[17.5%] lg:left-[16%] top-[51.5%] sm:top-[52%] w-[115px] sm:w-[135px] lg:w-[150px] h-[48px] sm:h-[52px] cursor-pointer hover:bg-white/20 rounded-full transition-all hover:scale-105"
         title="Watch Demo"
       />
 
