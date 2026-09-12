@@ -1,11 +1,11 @@
 import React from 'react';
 import { AuthProvider } from './services/authContext';
-import { DashboardPage } from './pages/Dashboard';
+import { LandingPage } from './pages/LandingPage';
 
 export const App: React.FC = () => {
   return (
     <AuthProvider>
-      <DashboardPage />
+      <LandingPage />
     </AuthProvider>
   );
 };
