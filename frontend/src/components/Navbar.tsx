@@ -22,7 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const displayName = profile?.display_name || profile?.username || user?.email?.split('@')[0] || 'Seeker';
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 px-6 lg:px-14 py-4 pointer-events-auto backdrop-blur-[2px]">
+    <header className="fixed top-0 left-0 right-0 z-40 px-6 lg:px-14 py-3.5 pointer-events-auto bg-[#3a82ce] shadow-md border-b border-white/15">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Brand Logo & Title (Left) */}
         <div
@@ -71,7 +71,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="flex items-center gap-2">
               <button
                 onClick={onOpenDashboard}
-                className="px-5 py-2.5 rounded-full bg-white/95 hover:bg-white text-slate-900 font-bold text-xs sm:text-sm shadow-xl transition-all hover:scale-105 flex items-center gap-2"
+                className="px-5 py-2 rounded-full bg-white text-slate-900 font-bold text-xs sm:text-sm shadow-lg transition-all hover:scale-105 flex items-center gap-2"
               >
                 <Flame className="w-4 h-4 text-ember-500" />
                 <span>Dashboard ({displayName})</span>
@@ -79,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={logout}
                 title="Logout"
-                className="p-2.5 rounded-full bg-white/90 hover:bg-white text-rose-600 shadow-md transition-all text-xs font-semibold"
+                className="p-2 rounded-full bg-white/90 hover:bg-white text-rose-600 shadow-md transition-all text-xs font-semibold"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -87,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           ) : (
             <button
               onClick={onOpenAuth}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/95 hover:bg-white text-slate-900 shadow-lg font-bold text-xs sm:text-sm transition-all hover:scale-105"
+              className="flex items-center gap-2 px-5 py-2 rounded-full bg-white text-slate-900 shadow-lg font-bold text-xs sm:text-sm transition-all hover:scale-105"
             >
               <UserIcon className="w-4 h-4 text-slate-800" />
               <span>Login / Register</span>
