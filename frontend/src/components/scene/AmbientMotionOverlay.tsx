@@ -41,30 +41,83 @@ const LeafSprite: React.FC<{
   );
 };
 
-// Foreground Grass Blade Component
-const GrassBlade: React.FC<{ left: string; height: number; delay: number }> = ({
+// Realistic Wind-Swaying Grass Blade Clump
+const GrassBladeClump: React.FC<{ left: string; height: number; delay: number; color?: string }> = ({
   left,
   height,
   delay,
+  color = '#6ba829',
 }) => {
   return (
     <motion.svg
       aria-hidden="true"
-      viewBox="0 0 10 40"
+      viewBox="0 0 16 45"
       className="absolute bottom-0 pointer-events-none z-10 origin-bottom"
-      style={{ left, height: `${height}px`, width: '12px' }}
+      style={{ left, height: `${height}px`, width: '16px' }}
       animate={{
-        rotate: [-3, 3, -3],
+        rotate: [-6, 6, -6],
+        skewX: [-4, 4, -4],
       }}
       transition={{
-        duration: 3 + delay % 2,
+        duration: 2.8 + (delay % 1.5),
         delay,
         repeat: Infinity,
         ease: 'easeInOut',
       }}
     >
-      <path d="M5 40 Q2 20 5 0 Q8 20 5 40 Z" fill="#6ba829" />
+      <path d="M4 45 Q1 20 4 0 Q7 20 4 45 Z" fill={color} />
+      <path d="M11 45 Q8 25 11 8 Q14 25 11 45 Z" fill="#58941f" />
     </motion.svg>
+  );
+};
+
+// Realistic Wind-Swaying Daisy Flower
+const DaisyFlower: React.FC<{ left: string; bottom: string; size: number; delay: number }> = ({
+  left,
+  bottom,
+  size,
+  delay,
+}) => {
+  return (
+    <motion.div
+      aria-hidden="true"
+      className="absolute pointer-events-none z-15 origin-bottom"
+      style={{ left, bottom, width: `${size}px`, height: `${size * 1.5}px` }}
+      animate={{
+        rotate: [-7, 7, -7],
+        y: [0, -2, 0],
+      }}
+      transition={{
+        duration: 3.2 + (delay % 1.8),
+        delay,
+        repeat: Infinity,
+        ease: 'easeInOut',
+      }}
+    >
+      <svg viewBox="0 0 30 45" className="w-full h-full">
+        {/* Flower Stem */}
+        <path d="M15 45 Q13 25 15 12" stroke="#5d9622" strokeWidth="2.5" fill="none" />
+        {/* Leaves on Stem */}
+        <path d="M14 30 Q8 26 10 22 Q14 25 14 30 Z" fill="#5d9622" />
+        <path d="M16 25 Q22 21 20 17 Q16 20 16 25 Z" fill="#4c8019" />
+        {/* White Daisy Petals */}
+        <g transform="translate(15, 12)">
+          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
+            <ellipse
+              key={angle}
+              cx="0"
+              cy="-7"
+              rx="2.5"
+              ry="6"
+              fill="#ffffff"
+              transform={`rotate(${angle})`}
+            />
+          ))}
+          {/* Yellow Center Disk */}
+          <circle cx="0" cy="0" r="4" fill="#ffcc00" />
+        </g>
+      </svg>
+    </motion.div>
   );
 };
 
@@ -140,15 +193,26 @@ export const AmbientMotionOverlay: React.FC = () => {
         />
       </div>
 
-      {/* 7. Grass Blades Wind Sway Layer */}
-      <GrassBlade left="5%" height={32} delay={0} />
-      <GrassBlade left="12%" height={28} delay={0.4} />
-      <GrassBlade left="24%" height={36} delay={1.1} />
-      <GrassBlade left="38%" height={30} delay={0.7} />
-      <GrassBlade left="52%" height={34} delay={1.5} />
-      <GrassBlade left="68%" height={29} delay={0.3} />
-      <GrassBlade left="84%" height={38} delay={1.2} />
-      <GrassBlade left="92%" height={31} delay={0.8} />
+      {/* 7. Realistic Bottom Foreground Grass & White Daisy Flowers Wind Simulation */}
+      <GrassBladeClump left="3%" height={38} delay={0.1} color="#68a327" />
+      <GrassBladeClump left="8%" height={32} delay={0.5} color="#58941f" />
+      <GrassBladeClump left="14%" height={42} delay={1.2} color="#7cb534" />
+      <GrassBladeClump left="22%" height={35} delay={0.8} color="#68a327" />
+      <GrassBladeClump left="31%" height={40} delay={1.6} color="#58941f" />
+      <GrassBladeClump left="39%" height={34} delay={0.4} color="#7cb534" />
+      <GrassBladeClump left="48%" height={44} delay={2.0} color="#68a327" />
+      <GrassBladeClump left="57%" height={36} delay={1.3} color="#58941f" />
+      <GrassBladeClump left="66%" height={41} delay={0.7} color="#7cb534" />
+      <GrassBladeClump left="75%" height={33} delay={1.9} color="#68a327" />
+      <GrassBladeClump left="83%" height={45} delay={1.0} color="#58941f" />
+      <GrassBladeClump left="91%" height={37} delay={0.3} color="#7cb534" />
+      <GrassBladeClump left="96%" height={40} delay={1.5} color="#68a327" />
+
+      {/* Wind-Swaying White Daisy Flowers matching footer location */}
+      <DaisyFlower left="4%" bottom="2px" size={24} delay={0.2} />
+      <DaisyFlower left="41%" bottom="4px" size={22} delay={0.9} />
+      <DaisyFlower left="58%" bottom="3px" size={26} delay={1.7} />
+      <DaisyFlower left="82%" bottom="1px" size={28} delay={1.1} />
     </div>
   );
 };
