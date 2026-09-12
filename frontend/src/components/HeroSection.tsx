@@ -1,4 +1,5 @@
 import React from 'react';
+import { AmbientMotionOverlay } from './scene/AmbientMotionOverlay';
 
 interface HeroSectionProps {
   onStartJourney: () => void;
@@ -19,12 +20,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   return (
     <section className="relative w-full h-screen overflow-hidden pointer-events-auto">
-      {/* 1. Full-screen background image matching reference */}
+      {/* 1. Full-screen untouched background image matching reference */}
       <img
         src="/hero-bg.png"
         alt="HEARTH Living World"
         className="w-full h-full object-cover object-center pointer-events-none select-none"
       />
+
+      {/* 2. Independent Ambient Motion Layers Overlay */}
+      <AmbientMotionOverlay />
 
       {/* 2. Interactive Hotspots over the image UI elements */}
 
