@@ -234,16 +234,7 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen w-full font-sans bg-sky-300 overflow-x-hidden selection:bg-amber-500 selection:text-white">
-      {/* Top Navbar */}
-      <Navbar
-        profile={profile}
-        onOpenAuth={() => setIsAuthOpen(true)}
-        onOpenDashboard={() => setIsDashboardOpen(true)}
-        activeSection={activeSection}
-        onNavigate={handleNavigate}
-      />
-
-      {/* Exact Reference Hero Section */}
+      {/* Exact Reference Hero Section with Integrated Functioning Header Hotspots */}
       <HeroSection
         onStartJourney={() => {
           if (isAuthenticated) {
