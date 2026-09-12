@@ -9,6 +9,7 @@ import { CtaSection } from '../components/sections/CtaSection';
 import { AuthModal } from '../components/AuthModal';
 import { DashboardModal } from '../components/DashboardModal';
 import { HearthWorld } from '../components/scene/HearthWorld';
+import { HeroImageBackground } from '../components/scene/HeroImageBackground';
 import { useAuth } from '../services/authContext';
 import {
   apiService,
@@ -233,12 +234,10 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen w-full font-sans bg-sky-300 overflow-x-hidden selection:bg-amber-500 selection:text-white">
-      {/* 3D R3F Environment Scene */}
-      <HearthWorld
-        stage={wick?.stage}
-        mood={wick?.mood}
-        energy={wick?.energy}
-        bond={wick?.bond}
+      {/* Exact Reference Hero Image Background with Parallax */}
+      <HeroImageBackground
+        onWickClick={() => setIsDashboardOpen(true)}
+        onLaptopClick={() => setIsDashboardOpen(true)}
       />
 
       {/* Top Navbar */}
