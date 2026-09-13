@@ -156,20 +156,20 @@ export const XpGrowthPanel: React.FC<XpGrowthPanelProps> = ({
           </div>
         </div>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 font-medium">
+        <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 font-semibold">
           {Math.round(targetXp - totalXp)} XP until next evolution
         </p>
       </div>
 
       {/* Attributes Bar Chart */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between text-xs font-semibold text-slate-400">
+        <div className="flex items-center justify-between text-xs font-extrabold text-slate-700 dark:text-slate-300">
           <span>Life Attributes</span>
           <span>Level & XP</span>
         </div>
 
         {attributes.length === 0 ? (
-          <p className="text-xs text-slate-500 italic text-center py-2">
+          <p className="text-xs text-slate-600 dark:text-slate-400 font-medium italic text-center py-2">
             No attributes unlocked yet
           </p>
         ) : (
@@ -178,14 +178,14 @@ export const XpGrowthPanel: React.FC<XpGrowthPanelProps> = ({
             return (
               <div key={attr.name} className="space-y-1">
                 <div className="flex items-center justify-between text-xs font-medium">
-                  <span className="text-slate-800 dark:text-slate-200 font-semibold">
+                  <span className="text-slate-900 dark:text-slate-100 font-bold">
                     {attr.name}
                   </span>
-                  <span className="text-amber-500 font-bold text-[11px]">
+                  <span className="text-amber-700 dark:text-amber-400 font-bold text-[11px]">
                     Lvl {attr.level} ({attr.xp} XP)
                   </span>
                 </div>
-                <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden border border-amber-200/50 dark:border-slate-700/50">
                   <motion.div
                     className="h-full bg-gradient-to-r from-amber-500 to-ember-500 rounded-full"
                     initial={{ width: 0 }}

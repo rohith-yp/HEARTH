@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Flame } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { HeroSection } from '../components/HeroSection';
 import { WickShowcaseSection } from '../components/sections/WickShowcaseSection';
@@ -8,6 +9,8 @@ import { AiChatSection } from '../components/sections/AiChatSection';
 import { CtaSection } from '../components/sections/CtaSection';
 import { AuthModal } from '../components/AuthModal';
 import { DashboardModal } from '../components/DashboardModal';
+import { WelcomeModal } from '../components/WelcomeModal';
+import { WickEvolutionModal } from '../components/WickEvolutionModal';
 import { HearthWorld } from '../components/scene/HearthWorld';
 import { HeroImageBackground } from '../components/scene/HeroImageBackground';
 import { useAuth } from '../services/authContext';
@@ -86,11 +89,19 @@ const DEMO_MEMORIES: MemoryItem[] = [
 ];
 
 export const LandingPage: React.FC = () => {
-  const { isAuthenticated, dashboardRefreshTrigger } = useAuth();
+  const { isAuthenticated, dashboardRefreshTrigger, theme } = useAuth();
 
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
+  const [isWelcomeOpen, setIsWelcomeOpen] = useState(false);
+  const [isSignupSuccess, setIsSignupSuccess] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+
+  const [evolutionData, setEvolutionData] = useState<{
+    isOpen: boolean;
+    oldStage: string;
+    newStage: string;
+  }>({ isOpen: false, oldStage: 'Spark', newStage: 'Ember' });
 
   // Real backend data state
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -134,6 +145,10 @@ export const LandingPage: React.FC = () => {
   }, [isAuthenticated]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     fetchBackendData();
   }, [fetchBackendData, dashboardRefreshTrigger]);
 
@@ -165,6 +180,8 @@ export const LandingPage: React.FC = () => {
   };
 
   const handleCompleteTask = async (taskId: string): Promise<CompleteTaskResponse | null> => {
+    const oldStage = wick?.stage || 'Spark';
+
     if (!isAuthenticated) {
       setTasks((prev) =>
         prev.map((t) => (t.id === taskId ? { ...t, completed: true } : t))
@@ -191,7 +208,16 @@ export const LandingPage: React.FC = () => {
             : prev
         );
       }
-      if (res.wick) setWick(res.wick);
+      if (res.wick) {
+        setWick(res.wick);
+        if (res.wick.stage && res.wick.stage.toLowerCase() !== oldStage.toLowerCase()) {
+          setEvolutionData({
+            isOpen: true,
+            oldStage,
+            newStage: res.wick.stage,
+          });
+        }
+      }
       if (res.attribute) {
         setAttributes((prev) =>
           prev.map((a) => (a.name === res.attribute?.name ? res.attribute! : a))
@@ -232,9 +258,17 @@ export const LandingPage: React.FC = () => {
     }
   };
 
+  const isNight = theme === 'dark';
+
   return (
-    <div className="relative min-h-screen w-full font-sans bg-sky-300 overflow-x-hidden selection:bg-amber-500 selection:text-white">
-      {/* Exact Reference Hero Section with Integrated Functioning Header Hotspots */}
+    <div
+      className={`relative min-h-screen w-full font-sans transition-colors duration-700 overflow-x-hidden selection:bg-amber-500 selection:text-white ${
+        isNight
+          ? 'bg-gradient-to-b from-[#0c0a17] via-[#151124] via-[#1b152d] to-[#120d20] text-amber-100'
+          : 'bg-gradient-to-b from-amber-100/50 via-orange-50/60 via-amber-50/80 to-amber-100/40 text-slate-800'
+      }`}
+    >
+      {/* Hero Section */}
       <HeroSection
         onStartJourney={() => {
           if (isAuthenticated) {
@@ -251,8 +285,8 @@ export const LandingPage: React.FC = () => {
       />
 
       {/* Scrollable Story Sections */}
-      <div className="relative z-10 space-y-12">
-        <WickShowcaseSection wick={wick} />
+      <div className="relative z-10 space-y-16 pb-16">
+        <WickShowcaseSection wick={wick} profile={profile} />
         <HabitsSection
           tasks={tasks}
           onCompleteTask={handleCompleteTask}
@@ -261,6 +295,7 @@ export const LandingPage: React.FC = () => {
         <AttributesSection profile={profile} attributes={attributes} />
         <AiChatSection onSendChat={handleSendChat} memories={memories} />
         <CtaSection
+          isAuthenticated={isAuthenticated}
           onStartJourney={() => {
             if (isAuthenticated) {
               setIsDashboardOpen(true);
@@ -268,11 +303,140 @@ export const LandingPage: React.FC = () => {
               setIsAuthOpen(true);
             }
           }}
+          onOpenDashboard={() => setIsDashboardOpen(true)}
         />
+
       </div>
 
+      {/* Full-Width Real Footer Section */}
+      <footer className="relative z-10 w-full bg-[#f5eedf]/95 dark:bg-[#080612]/95 border-t border-amber-300/70 dark:border-amber-500/20 backdrop-blur-md pt-16 pb-12 px-6 sm:px-12 lg:px-16 pointer-events-auto transition-colors duration-700">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+            {/* Brand Information */}
+            <div className="md:col-span-6 space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-400 flex items-center justify-center shadow-md">
+                  <Flame className="w-5 h-5 text-slate-950" />
+                </div>
+                <h4 className="text-2xl font-extrabold text-slate-900 dark:text-amber-100 font-cinzel tracking-wider">
+                  HEARTH
+                </h4>
+              </div>
+              <p className="text-sm font-semibold text-slate-800 dark:text-amber-200/90 max-w-md leading-relaxed">
+                A warm RPG habit-building companion for everyday mindfulness, focus, and personal growth. Better Habits, Brighter Days.
+              </p>
+            </div>
+
+            {/* Quick Links Column 1 */}
+            <div className="md:col-span-3 space-y-3">
+              <h5 className="text-xs font-extrabold text-amber-900 dark:text-amber-300 uppercase tracking-widest">
+                Explore
+              </h5>
+              <ul className="space-y-2 text-sm font-bold text-slate-800 dark:text-amber-100">
+                <li>
+                  <button
+                    onClick={() => handleNavigate('journey')}
+                    className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors"
+                  >
+                    Journey Companion
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleNavigate('features')}
+                    className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors"
+                  >
+                    Habits & Quests
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleNavigate('features')}
+                    className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors"
+                  >
+                    Life Attributes
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Quick Links Column 2 */}
+            <div className="md:col-span-3 space-y-3">
+              <h5 className="text-xs font-extrabold text-amber-900 dark:text-amber-300 uppercase tracking-widest">
+                Features
+              </h5>
+              <ul className="space-y-2 text-sm font-bold text-slate-800 dark:text-amber-100">
+                <li>
+                  <button
+                    onClick={() => handleNavigate('features')}
+                    className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors"
+                  >
+                    AI Chat with Wick
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleNavigate('journey')}
+                    className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors"
+                  >
+                    Evolution Stages
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      if (isAuthenticated) setIsDashboardOpen(true);
+                      else setIsAuthOpen(true);
+                    }}
+                    className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors"
+                  >
+                    Sanctuary Dashboard
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom Divider & Copyright */}
+          <div className="border-t border-amber-300/80 dark:border-amber-500/20 pt-8 mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-bold text-slate-800 dark:text-amber-200/80">
+            <p>© {new Date().getFullYear()} HEARTH. All rights reserved.</p>
+            <p className="flex items-center gap-1.5 text-amber-800 dark:text-amber-300">
+              <span>Kindled with warmth & care</span>
+              <Flame className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+            </p>
+          </div>
+        </div>
+      </footer>
+
       {/* Login / Register Modal */}
-      <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        onSuccess={(isSignup) => {
+          setIsSignupSuccess(isSignup);
+          setIsWelcomeOpen(true);
+        }}
+      />
+
+      {/* Welcome & Guidance Notification Modal */}
+      <WelcomeModal
+        isOpen={isWelcomeOpen}
+        onClose={() => setIsWelcomeOpen(false)}
+        profile={profile}
+        wick={wick}
+        isSignup={isSignupSuccess}
+        onOpenDashboard={() => setIsDashboardOpen(true)}
+      />
+
+      {/* Cinematic Evolution Transition Modal */}
+      <WickEvolutionModal
+        isOpen={evolutionData.isOpen}
+        oldStage={evolutionData.oldStage}
+        newStage={evolutionData.newStage}
+        onClose={() =>
+          setEvolutionData((prev) => ({ ...prev, isOpen: false }))
+        }
+      />
 
       {/* Interactive Sanctuary Dashboard View Modal */}
       <DashboardModal

@@ -22,11 +22,11 @@
 }
 
 .light .glass-panel {
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 252, 245, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(100, 100, 100, 0.15);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(180, 83, 9, 0.08);
 }
 
 .glass-card {
@@ -36,13 +36,13 @@
 }
 
 .light .glass-card {
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(255, 248, 235, 0.65);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(217, 119, 6, 0.15);
 }
 
 .ember-glow {
-  box-shadow: 0 0 25px rgba(255, 92, 28, 0.35);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.45);
 }
 
 /* Custom Scrollbar */
@@ -95,3 +95,10 @@
   background-size: 200% 100%;
   animation: shimmer 1.8s infinite;
 }
+
+/* Hide native Edge/IE/Chrome password reveal icon to use our high-contrast custom Eye toggle */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+

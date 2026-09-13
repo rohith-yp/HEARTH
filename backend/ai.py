@@ -72,31 +72,36 @@ Personality:
 Return only Wick's spoken response.
 """
 
-    response = client.chat.completions.create(
-        model="openai/gpt-oss-20b",
-        messages=[
-            {
-                "role": "system",
-                "content": "You are Wick, a living companion in Hearth.",
-            },
-            {
-                "role": "user",
-                "content": prompt,
-            },
-        ],
-        temperature=0.8,
-        max_tokens=300,
-    )
+    models_to_try = [
+        "groq/compound-mini",
+        "groq/compound",
+        "qwen/qwen3.6-27b",
+        "openai/gpt-oss-20b",
+    ]
 
-    if not response.choices:
-        raise RuntimeError("Groq returned no choices")
+    for model in models_to_try:
+        try:
+            response = client.chat.completions.create(
+                model=model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are Wick, a living companion in Hearth.",
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    },
+                ],
+                temperature=0.7,
+                max_tokens=250,
+            )
+            if response and response.choices and response.choices[0].message.content:
+                content = response.choices[0].message.content.strip()
+                if content:
+                    return content
+        except Exception as err:
+            print(f"[Wick AI] Model {model} call failed: {err}")
+            continue
 
-    content = response.choices[0].message.content
-
-    if not content or not content.strip():
-        raise RuntimeError(
-            f"Groq returned an empty response. Finish reason: "
-            f"{response.choices[0].finish_reason}"
-        )
-
-    return content.strip()
+    return "I'm right here beside you by the hearth fire. Keep feeding your habits and taking steady steps forward!"

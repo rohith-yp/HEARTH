@@ -78,10 +78,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
               <button
                 onClick={logout}
-                title="Logout"
-                className="p-2 rounded-full bg-white/90 hover:bg-white text-rose-600 shadow-md transition-all text-xs font-semibold"
+                title="Log Out of Hearth"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-md transition-all hover:scale-105"
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Log Out</span>
               </button>
             </div>
           ) : (

@@ -1,0 +1,11 @@
+{
+  "name": "hearth",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k -p \"[{name}]\" -n \"FRONTEND,BACKEND\" -c \"cyan.bold,yellow.bold\" \"npm --prefix frontend run dev\" \"cd backend && venv\\Scripts\\uvicorn.exe main:app --reload --port 8000\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

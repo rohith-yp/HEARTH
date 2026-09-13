@@ -3,14 +3,16 @@ node_modules/
 .pnp
 .pnp.js
 
-# Environment variables
+# Environment variables (Never commit secrets!)
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example
+*.env
+**/.env
+**/.env.*
+!**/.env.example
 
-# Python
+# Python & Virtual Environments
 __pycache__/
 *.py[cod]
 *$py.class
@@ -21,6 +23,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.venv/
 
 # Build & Output
 dist/
@@ -28,8 +31,9 @@ build/
 *.egg-info/
 .workspace/
 
-# IDE / OS
+# IDE / System / Logs
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+*.log

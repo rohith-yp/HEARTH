@@ -133,40 +133,38 @@ export const TaskListPanel: React.FC<TaskListPanelProps> = ({
       className="glass-panel rounded-3xl p-6 pointer-events-auto flex flex-col gap-4"
     >
       {/* Panel Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-ember-500" />
-          <h3 className="font-bold text-lg text-slate-900 dark:text-white font-cinzel">
-            Habits & Daily Tasks
+      <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-amber-500/20">
+        <div className="flex items-center gap-1.5 min-w-0">
+          <Sparkles className="w-4 h-4 text-amber-500 flex-shrink-0" />
+          <h3 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-amber-100 font-cinzel tracking-wider truncate">
+            Habits & Quests
           </h3>
         </div>
+        <button
+          onClick={() => setIsAdding(!isAdding)}
+          className="px-2.5 py-1 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs shadow-md flex items-center gap-1 transition-all flex-shrink-0"
+          title="Create Task"
+        >
+          <Plus className="w-3.5 h-3.5" />
+          <span>+ Quest</span>
+        </button>
+      </div>
 
-        {/* Filter Pills & Add Button */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center p-1 rounded-xl bg-slate-200/50 dark:bg-slate-800/50 text-xs font-semibold">
-            {(['pending', 'all', 'completed'] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setFilter(tab)}
-                className={`px-3 py-1 rounded-lg capitalize transition-all ${
-                  filter === tab
-                    ? 'bg-ember-500 text-white shadow-md'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-
+      {/* Filter Tabs Bar (Full Width Row) */}
+      <div className="flex items-center justify-between bg-amber-100/60 dark:bg-slate-900/80 p-1 rounded-2xl border border-amber-200/80 dark:border-white/10 text-xs font-bold">
+        {(['pending', 'all', 'completed'] as const).map((tab) => (
           <button
-            onClick={() => setIsAdding(!isAdding)}
-            className="p-2 rounded-xl bg-ember-500 hover:bg-ember-400 text-white transition-all shadow-md shadow-ember-500/30"
-            title="Create Task"
+            key={tab}
+            onClick={() => setFilter(tab)}
+            className={`flex-1 py-1.5 rounded-xl capitalize transition-all text-center ${
+              filter === tab
+                ? 'bg-amber-500 text-slate-950 font-extrabold shadow-sm'
+                : 'text-slate-700 dark:text-amber-200/70 hover:text-amber-700 dark:hover:text-amber-300'
+            }`}
           >
-            <Plus className="w-4 h-4" />
+            {tab}
           </button>
-        </div>
+        ))}
       </div>
 
       {/* Task Add Form */}
@@ -177,7 +175,7 @@ export const TaskListPanel: React.FC<TaskListPanelProps> = ({
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             onSubmit={handleCreate}
-            className="glass-card rounded-2xl p-4 flex flex-col gap-3 border border-ember-500/30 overflow-hidden"
+            className="glass-card rounded-2xl p-4 flex flex-col gap-3 border border-amber-500/30 overflow-hidden"
           >
             <input
               type="text"
@@ -185,7 +183,7 @@ export const TaskListPanel: React.FC<TaskListPanelProps> = ({
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               required
-              className="w-full bg-slate-100 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700/50 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-ember-500"
+              className="w-full bg-white dark:bg-slate-900/60 border border-amber-300/80 dark:border-slate-700/50 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:border-amber-500 font-medium"
             />
             <div className="grid grid-cols-2 gap-2">
               <input
@@ -193,12 +191,12 @@ export const TaskListPanel: React.FC<TaskListPanelProps> = ({
                 placeholder="Category (e.g. Work, Health)"
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value)}
-                className="w-full bg-slate-100 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700/50 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-ember-500"
+                className="w-full bg-white dark:bg-slate-900/60 border border-amber-300/80 dark:border-slate-700/50 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:border-amber-500 font-medium"
               />
               <select
                 value={newAttribute}
                 onChange={(e) => setNewAttribute(e.target.value)}
-                className="w-full bg-slate-100 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700/50 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-ember-500"
+                className="w-full bg-white dark:bg-slate-900/60 border border-amber-300/80 dark:border-slate-700/50 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-medium"
               >
                 <option value="Focus">Focus (+10 XP)</option>
                 <option value="Health">Health (+10 XP)</option>
@@ -211,14 +209,14 @@ export const TaskListPanel: React.FC<TaskListPanelProps> = ({
               <button
                 type="button"
                 onClick={() => setIsAdding(false)}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white"
+                className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="px-4 py-1.5 rounded-xl bg-ember-500 hover:bg-ember-400 text-white text-xs font-semibold shadow-md"
+                className="px-4 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold shadow-md"
               >
                 {submitting ? 'Creating...' : 'Add Task'}
               </button>
@@ -230,9 +228,9 @@ export const TaskListPanel: React.FC<TaskListPanelProps> = ({
       {/* Task List */}
       <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
         {filteredTasks.length === 0 ? (
-          <div className="py-8 text-center text-slate-500 dark:text-slate-400 text-sm">
+          <div className="py-8 text-center text-slate-700 dark:text-slate-300 text-sm font-semibold">
             <p>No tasks match this view.</p>
-            <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 font-medium">
               Add a task above to earn XP and nourish Wick!
             </p>
           </div>
@@ -248,8 +246,8 @@ export const TaskListPanel: React.FC<TaskListPanelProps> = ({
                 exit={{ opacity: 0, scale: 0.95 }}
                 className={`glass-card rounded-2xl p-3.5 flex items-center justify-between gap-3 border transition-all ${
                   isDone
-                    ? 'opacity-60 bg-slate-900/20 border-slate-800'
-                    : 'hover:border-ember-500/40 border-slate-700/30'
+                    ? 'opacity-65 bg-amber-50/60 dark:bg-slate-900/40 border-amber-200/60 dark:border-slate-800'
+                    : 'hover:border-amber-500/50 border-amber-200/70 dark:border-slate-700/40 bg-white/70 dark:bg-transparent'
                 }`}
               >
                 <div className="flex items-center gap-3 min-w-0">
@@ -259,7 +257,7 @@ export const TaskListPanel: React.FC<TaskListPanelProps> = ({
                     className={`transition-colors flex-shrink-0 ${
                       isDone
                         ? 'text-emerald-500'
-                        : 'text-slate-400 hover:text-ember-500'
+                        : 'text-slate-400 hover:text-amber-500'
                     }`}
                   >
                     {isDone ? (
@@ -271,22 +269,22 @@ export const TaskListPanel: React.FC<TaskListPanelProps> = ({
 
                   <div className="min-w-0">
                     <h4
-                      className={`text-sm font-semibold truncate ${
+                      className={`text-sm font-bold truncate ${
                         isDone
-                          ? 'line-through text-slate-500'
+                          ? 'line-through text-slate-600 dark:text-slate-400 font-medium'
                           : 'text-slate-900 dark:text-white'
                       }`}
                     >
                       {t.title}
                     </h4>
-                    <div className="flex items-center gap-2 mt-0.5 text-[11px] text-slate-400">
+                    <div className="flex items-center gap-2 mt-0.5 text-[11px] text-slate-600 dark:text-slate-400">
                       {t.category && (
-                        <span className="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">
+                        <span className="px-2 py-0.5 rounded-md bg-amber-100 dark:bg-slate-800 text-amber-900 dark:text-slate-300 border border-amber-200/80 dark:border-slate-700 font-semibold">
                           {t.category}
                         </span>
                       )}
                       {t.attribute_name && (
-                        <span className="text-amber-400 font-medium">
+                        <span className="text-amber-700 dark:text-amber-400 font-bold">
                           {t.attribute_name}
                         </span>
                       )}
@@ -296,14 +294,14 @@ export const TaskListPanel: React.FC<TaskListPanelProps> = ({
 
                 {/* Right Rewards & Delete */}
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded-lg">
-                    <Flame className="w-3.5 h-3.5" />
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-amber-900 dark:text-amber-400 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 px-2.5 py-1 rounded-lg">
+                    <Flame className="w-3.5 h-3.5 text-amber-500" />
                     <span>+{t.xp_reward} XP</span>
                   </div>
 
                   <button
                     onClick={() => onDeleteTask(t.id)}
-                    className="p-1.5 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                    className="p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
                     title="Delete task"
                   >
                     <Trash2 className="w-4 h-4" />
